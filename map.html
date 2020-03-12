@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Coronavirus cases in Berlin</title>
+    <!-- Load plotly.js into the DOM -->
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='mymap' style="width: 100%; height: 100%;">
+        <!-- Plotly chart will be drawn inside this DIV -->
+    </div>
+
+    <script>
+        Plotly.d3.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTLpps4mgkv5Z8Q-XAtFvL65QWZvjpyan3dBJPeHYXQuZHLxKXy2j3udtMWkSZMppmiD41YP2ayItwj/pub?gid=0&single=true&output=csv", function (err, rows) {
+
+            const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+            function dateDiffInDays(a, b) {
+                const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+                const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+                return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+            }
+            const today = new Date();
+            const beginning = new Date("2020-03-01");
+            const days = dateDiffInDays(beginning, today);
+            var lat_long = [
+                ["Charlottenburg-Wilmersdorf", 52.5095354, 13.2432975],
+                ["Friedrichshain-Kreuzberg", 52.5082148, 13.4247436],
+                ["Lichtenberg", 52.5321719, 13.4672025],
+                ["Marzahn-Hellersdorf", 52.5322829, 13.5351974],
+                ["Mitte", 52.5332447, 13.3304226],
+                ["Neukölln", 52.4459959, 13.3917517],
+                ["Pankow", 52.5977691, 13.3653063],
+                ["Reinickendorf", 52.6048723, 13.2251513],
+                ["Spandau", 52.5192793, 13.1256896],
+                ["Steglitz-Zehlendorf", 52.4296191, 13.1599921],
+                ["Tempelhof-Schöneberg", 52.4406917, 13.3037243],
+                ["Treptow-Köpenick", 52.417978, 13.5303404],
+            ]
+            var numValues = lat_long.map(i => (isNaN(rows[days - 1][i[0]]) ? 0 : rows[days - 1][i[0]]));
+            var ratio = Math.max(...numValues) / 100;
+            var normValues = numValues.map(v => Math.round(v / ratio));
+            var labels = lat_long.map(i => i[0] + " = " + (isNaN(rows[days - 1][i[0]]) ? 0 : rows[days - 1][i[0]]));
+            var data = [
+                {
+                    type: "scattermapbox",
+                    text: labels,
+                    lon: lat_long.map(i => i[2]),
+                    lat: lat_long.map(i => i[1]),
+                    marker: {
+                        size: normValues,
+                    },
+                }
+            ];
+
+            var layout = {
+                dragmode: "zoom",
+                mapbox: { style: "open-street-map", center: { lat: 52.5069704, lon: 13.2846502 }, zoom: 10 },
+                margin: { r: 0, t: 0, b: 0, l: 0 }
+            };
+
+            Plotly.newPlot("mymap", data, layout);
+
+
+        });
+    </script>
+</body>
+
+</html>
