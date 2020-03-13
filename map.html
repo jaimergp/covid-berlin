@@ -10,6 +10,9 @@
         html,
         body {
             height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
         }
     </style>
 </head>
@@ -92,7 +95,11 @@
                 ]
             };
 
-            Plotly.newPlot("mymap", data, layout);
+            var config = {
+                responsive: "true"
+            }
+
+            Plotly.newPlot("mymap", data, layout, config);
 
 
         });
