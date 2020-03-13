@@ -29,16 +29,7 @@
     <script>
         Plotly.d3.csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vTLpps4mgkv5Z8Q-XAtFvL65QWZvjpyan3dBJPeHYXQuZHLxKXy2j3udtMWkSZMppmiD41YP2ayItwj/pub?gid=0&single=true&output=csv", function (err, rows) {
 
-            const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-            function dateDiffInDays(a, b) {
-                const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-                const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
-
-                return Math.floor((utc2 - utc1) / _MS_PER_DAY);
-            }
-            const today = new Date();
-            const beginning = new Date("2020-03-01");
-            const days = dateDiffInDays(beginning, today);
+            const days = 13;
             var lat_long = [
                 ["Charlottenburg-Wilmersdorf", 52.5095354, 13.2432975],
                 ["Friedrichshain-Kreuzberg", 52.5082148, 13.4247436],
