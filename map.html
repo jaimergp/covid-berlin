@@ -65,7 +65,27 @@
             var layout = {
                 dragmode: "zoom",
                 mapbox: { style: "open-street-map", center: { lat: 52.5069704, lon: 13.2846502 }, zoom: 10 },
-                margin: { r: 0, t: 0, b: 0, l: 0 }
+                margin: { r: 0, t: 0, b: 0, l: 0 },
+                annotations: [
+                    {
+                        text: "Total as of " + rows[days - 1]["Kiez"] + " = " + rows[days - 1]["Total"] + " (+" + rows[days - 1]["Deltas"] + ")",
+                        x: 0, y: 1,
+                        xref: "paper",
+                        yref: "paper",
+                        font: {
+                            family: 'Courier New, monospace',
+                            size: 16,
+                            color: '#ffffff'
+                        },
+                        align: 'center',
+                        showarrow: false,
+                        bordercolor: '#000000',
+                        borderwidth: 2,
+                        borderpad: 4,
+                        bgcolor: '#000000',
+                        opacity: 0.8
+                    }
+                ]
             };
 
             Plotly.newPlot("mymap", data, layout);
