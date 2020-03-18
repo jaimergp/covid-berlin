@@ -1,3 +1,7 @@
+# Deprecated
+
+From 18.03 on, you need to check [the official map @ Berlin.de](https://www.berlin.de/corona/fallstatistik/).
+
 # covid-berlin
 
 Daily updates on the coronavirus cases in Berlin, by kiez. [Check the map](https://jaimergp.github.io/covid-berlin/map.html).
